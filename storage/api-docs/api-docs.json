@@ -1,0 +1,611 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "QuoteTool APIs",
+        "version": "1.0"
+    },
+    "paths": {
+        "/api/v1/auth/me": {
+            "get": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Get user info from firebase token",
+                "description": "Get user info from firebase token",
+                "operationId": "getUserInfoFromToken",
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/auth/signup": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Create new user",
+                "description": "Create new user",
+                "operationId": "createUser",
+                "requestBody": {
+                    "description": "User schemas",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/User"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/auth/{id}": {
+            "put": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Update user",
+                "description": "Update user",
+                "operationId": "updateUser",
+                "requestBody": {
+                    "description": "User schemas",
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/User"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        },
+        "/api/v1/files/upload": {
+            "post": {
+                "tags": [
+                    "Files"
+                ],
+                "summary": "Upload file",
+                "description": "Upload file",
+                "operationId": "uploadFile",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "file"
+                                ],
+                                "properties": {
+                                    "file": {
+                                        "description": "file to upload",
+                                        "type": "file"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Successful operation"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "AnnualAndOneTime": {
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "isHidden": {
+                        "type": "string"
+                    },
+                    "idRequire": {
+                        "type": "boolean"
+                    },
+                    "colChange": {
+                        "$ref": "#/components/schemas/ColChange"
+                    },
+                    "annuals": {
+                        "description": "bla bla bla",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/OrderInfo"
+                        }
+                    },
+                    "oneTimes": {
+                        "description": "bla bla bla",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/OrderInfo"
+                        }
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "AnnualAndOneTime"
+                }
+            },
+            "ColChange": {
+                "properties": {
+                    "qty": {
+                        "type": "boolean"
+                    },
+                    "accessNumber": {
+                        "type": "boolean"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "ColChange"
+                }
+            },
+            "OrderInfo": {
+                "properties": {
+                    "subGroup": {
+                        "type": "string"
+                    },
+                    "product": {
+                        "type": "string"
+                    },
+                    "costType": {
+                        "type": "string"
+                    },
+                    "cost": {
+                        "type": "number",
+                        "format": "float"
+                    },
+                    "lines": {
+                        "type": "string"
+                    },
+                    "code": {
+                        "type": "string"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "OrderInfo"
+                }
+            },
+            "Customer": {
+                "properties": {
+                    "company": {
+                        "type": "string"
+                    },
+                    "addressOne": {
+                        "type": "string"
+                    },
+                    "addressTwo": {
+                        "type": "string"
+                    },
+                    "zip": {
+                        "type": "string"
+                    },
+                    "state": {
+                        "type": "string"
+                    },
+                    "city": {
+                        "type": "string"
+                    },
+                    "industry": {
+                        "type": "string"
+                    },
+                    "owner": {
+                        "type": "integer"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "Customer"
+                }
+            },
+            "Industry": {
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "Industry"
+                }
+            },
+            "Quote": {
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "productName": {
+                        "type": "string"
+                    },
+                    "height": {
+                        "type": "number",
+                        "format": "float"
+                    },
+                    "contactName": {
+                        "type": "string"
+                    },
+                    "uuid": {
+                        "type": "string"
+                    },
+                    "version": {
+                        "type": "string"
+                    },
+                    "customerId": {
+                        "type": "integer"
+                    },
+                    "userId": {
+                        "type": "integer"
+                    },
+                    "createDay": {
+                        "type": "string"
+                    },
+                    "serviceId": {
+                        "type": "array",
+                        "items": {
+                            "type": "integer"
+                        }
+                    },
+                    "pay": {
+                        "type": "string"
+                    },
+                    "validDays": {
+                        "type": "integer"
+                    },
+                    "totalCost": {
+                        "type": "number",
+                        "format": "float"
+                    },
+                    "isSave": {
+                        "type": "boolean"
+                    },
+                    "term": {
+                        "$ref": "#/components/schemas/Term"
+                    },
+                    "preparer": {
+                        "$ref": "#/components/schemas/QuotePreparer"
+                    },
+                    "customer": {
+                        "$ref": "#/components/schemas/Customer"
+                    },
+                    "tableService": {
+                        "type": "object"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "Quote"
+                }
+            },
+            "QuotePreparer": {
+                "properties": {
+                    "email": {
+                        "type": "string"
+                    },
+                    "mobile": {
+                        "type": "string"
+                    },
+                    "office": {
+                        "type": "string"
+                    },
+                    "name": {
+                        "type": "string"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "QuotePreparer"
+                }
+            },
+            "Section": {
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "template": {
+                        "type": "string"
+                    },
+                    "code": {
+                        "type": "string"
+                    },
+                    "order": {
+                        "type": "integer"
+                    },
+                    "isAllService": {
+                        "type": "boolean"
+                    },
+                    "height": {
+                        "type": "number",
+                        "format": "float"
+                    },
+                    "includes": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/IncludeInfo"
+                        }
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "Section"
+                }
+            },
+            "IncludeInfo": {
+                "properties": {
+                    "industry": {
+                        "type": "string"
+                    },
+                    "serviceId": {
+                        "type": "integer"
+                    },
+                    "channelBank": {
+                        "type": "string"
+                    },
+                    "type": {
+                        "type": "string"
+                    },
+                    "order": {
+                        "type": "integer"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "IncludeInfo"
+                }
+            },
+            "Service": {
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "prefixCode": {
+                        "type": "string"
+                    },
+                    "descriptions": {
+                        "type": "string"
+                    },
+                    "isHidden": {
+                        "type": "string"
+                    },
+                    "hiddenotc": {
+                        "type": "string"
+                    },
+                    "hiddenarc": {
+                        "type": "string"
+                    },
+                    "hiddenaddin": {
+                        "type": "string"
+                    },
+                    "hiddenaddarc": {
+                        "type": "string"
+                    },
+                    "terms": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/TermInfo"
+                        }
+                    },
+                    "addOnARC": {
+                        "type": "array",
+                        "items": {
+                            "type": "integer"
+                        }
+                    },
+                    "addOnInstall": {
+                        "type": "array",
+                        "items": {
+                            "type": "integer"
+                        }
+                    },
+                    "discountARC": {
+                        "type": "array",
+                        "items": {
+                            "type": "integer"
+                        }
+                    },
+                    "discountOTC": {
+                        "type": "array",
+                        "items": {
+                            "type": "integer"
+                        }
+                    },
+                    "fields": {
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/FieldInfo"
+                        }
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "Service"
+                }
+            },
+            "FieldInfo": {
+                "properties": {
+                    "type": {
+                        "type": "string"
+                    },
+                    "qty": {
+                        "type": "integer"
+                    },
+                    "name": {
+                        "type": "string"
+                    },
+                    "isRequire": {
+                        "type": "boolean"
+                    },
+                    "isHidden": {
+                        "type": "string"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "FieldInfo"
+                }
+            },
+            "AnnualAndOneTimeInfo": {
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "idRequire": {
+                        "type": "boolean"
+                    },
+                    "colChange": {
+                        "type": "string"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "AnnualAndOneTimeInfo"
+                }
+            },
+            "TermInfo": {
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "cost": {
+                        "type": "number",
+                        "format": "float"
+                    },
+                    "product": {
+                        "type": "string"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "TermInfo"
+                }
+            },
+            "Term": {
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "cost": {
+                        "type": "number",
+                        "format": "float"
+                    },
+                    "product": {
+                        "type": "string"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "Term"
+                }
+            },
+            "User": {
+                "properties": {
+                    "company": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "firstName": {
+                        "type": "string"
+                    },
+                    "lastName": {
+                        "type": "string"
+                    },
+                    "uuid": {
+                        "type": "string"
+                    },
+                    "office": {
+                        "type": "string"
+                    },
+                    "phoneNumber": {
+                        "type": "string"
+                    },
+                    "zipCode": {
+                        "type": "integer"
+                    },
+                    "state": {
+                        "type": "string"
+                    },
+                    "address": {
+                        "type": "string"
+                    },
+                    "city": {
+                        "type": "string"
+                    },
+                    "role": {
+                        "type": "string"
+                    },
+                    "gender": {
+                        "type": "boolean"
+                    },
+                    "active": {
+                        "type": "boolean"
+                    },
+                    "disableLogin": {
+                        "type": "boolean"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "User"
+                }
+            }
+        },
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "apiKey",
+                "description": "Bearer Auth Token",
+                "name": "x-auth-token",
+                "in": "header"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Auth",
+            "description": "Authentication APIs"
+        },
+        {
+            "name": "Files",
+            "description": "File APIs"
+        }
+    ],
+    "security": [
+        []
+    ]
+}
